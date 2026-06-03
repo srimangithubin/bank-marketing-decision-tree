@@ -1,15 +1,14 @@
-
 # Bank Marketing Subscription Prediction using Decision Tree Classification
 
 ## Project Overview
 
 This project builds an end-to-end **Decision Tree Classification** model to predict whether a bank customer will subscribe to a term deposit.
 
-The dataset is the **Bank Marketing dataset** from the UCI Machine Learning Repository. It is based on direct marketing phone campaigns conducted by a Portuguese banking institution.
+The project uses the **Bank Marketing dataset** from the UCI Machine Learning Repository. The dataset is based on direct marketing phone campaigns conducted by a Portuguese banking institution.
 
-The main goal is to answer this question:
+The main question is:
 
-> Can we use customer, financial and campaign-related information to predict whether a customer will subscribe to a term deposit?
+> Can customer, financial and campaign-related information be used to predict whether a customer will subscribe to a term deposit?
 
 This is a **binary classification problem**.
 
@@ -49,9 +48,9 @@ The features include customer demographics, financial information, current campa
 
 ### Important Modelling Note
 
-The `duration` variable was removed before model training.
+The `duration` column was removed before model training.
 
-This is because call duration is only known after the customer call is completed. If this variable is used for prediction, it can cause **data leakage** and make the model unrealistically strong. In a real marketing campaign, the bank would need to predict likely subscribers before making the call.
+This is because call duration is only known after the customer call is completed. If this variable is used, the model may become unrealistically strong because of **data leakage**. In a real marketing campaign, the bank would need to predict likely subscribers before making the call.
 
 ---
 
@@ -72,13 +71,13 @@ The project follows a complete machine learning workflow:
 11. Cost-complexity pruning experiment
 12. Model comparison
 13. Final model selection
-14. Confusion matrix and model interpretation
+14. Confusion matrix and interpretation
 
 ---
 
 ## Decision Tree Concepts Covered
 
-This project was designed to practise the core theory behind Decision Trees.
+This project was built to practise the main theory behind Decision Tree Classification.
 
 ### 1. Gini Impurity
 
@@ -100,15 +99,15 @@ For this project, there are two classes:
 - `yes`
 - `no`
 
-A node with mostly one class has low Gini impurity. A node with a strong mix of both classes has higher Gini impurity.
+A node with mostly one class has low Gini impurity. A node with a strong mix of both classes has high Gini impurity.
 
-The Decision Tree tries to choose splits that reduce impurity and create purer child nodes.
+The Decision Tree chooses splits that reduce impurity and create purer child nodes.
 
 ---
 
 ### 2. Entropy
 
-Entropy measures the disorder or uncertainty in a node.
+Entropy measures disorder or uncertainty inside a node.
 
 The formula is:
 
@@ -124,7 +123,7 @@ Where:
 If a node contains only one class, entropy is 0.  
 If a node contains a balanced mix of classes, entropy is higher.
 
-In this project, an Entropy-based Decision Tree was trained to compare its performance against the Gini-based Decision Tree.
+In this project, an Entropy-based Decision Tree was trained and compared with the Gini-based Decision Tree.
 
 ---
 
@@ -156,15 +155,15 @@ In simple terms:
 
 Decision Trees can easily overfit when they are allowed to grow too deep.
 
-An overfitted tree performs extremely well on training data but poorly on unseen test data.
+An overfitted tree performs extremely well on training data but does not generalise well to unseen test data.
 
-In this project, the baseline Gini and Entropy models both achieved a training accuracy of 1.00, which showed that the unrestricted trees were memorising the training data.
+In this project, the baseline Gini and Entropy trees both achieved a training accuracy of 1.00, which showed that the unrestricted trees were memorising the training data.
 
 ---
 
 ### 5. Hyperparameters Used
 
-The following Decision Tree hyperparameters were tuned:
+The following Decision Tree hyperparameters were used and tuned:
 
 | Hyperparameter | Meaning |
 |---|---|
@@ -181,47 +180,37 @@ The following Decision Tree hyperparameters were tuned:
 
 ### Target Variable Distribution
 
-![Target Variable Distribution](images/target_distribution.png)
+![Target Variable Distribution](target_distribution.png)
 
 The target variable is imbalanced. Most customers did not subscribe to a term deposit, while only a smaller percentage subscribed.
 
-This means accuracy alone can be misleading. For this reason, precision, recall, F1-score and ROC-AUC were also used to evaluate the model.
-
----
-
-### Age Distribution
-
-![Age Distribution](images/age_distribution.png)
-
-The age distribution shows that most customers are middle-aged, with fewer customers in the very young and very old age groups.
-
-Age may still be useful for the Decision Tree because subscription behaviour can vary across customer life stages.
+This means accuracy alone can be misleading. Precision, recall, F1-score and ROC-AUC were also used to evaluate the model.
 
 ---
 
 ### Subscription by Job Type
 
-![Subscription by Job Type](images/subscription_by_job.png)
+![Subscription by Job Type](subscription_by_job.png)
 
-The subscription count differs across job categories. This suggests that customer occupation may be useful for predicting term deposit subscription.
+The subscription count differs across job categories. This suggests that occupation may be useful for predicting term deposit subscription.
 
-A Decision Tree can use this type of categorical feature by applying one-hot encoding before model training.
+Because `job` is a categorical variable, one-hot encoding was applied before model training.
 
 ---
 
 ### Subscription by Marital Status
 
-![Subscription by Marital Status](images/subscription_by_marital_status.png)
+![Subscription by Marital Status](subscription_by_marital_status.png)
 
 The marital status plot shows how subscription outcomes vary across married, single and divorced customers.
 
-This feature may help the model capture differences in financial behaviour between customer groups.
+This feature may help the Decision Tree capture differences in financial behaviour between customer groups.
 
 ---
 
 ### Correlation Heatmap
 
-![Correlation Heatmap](images/correlation_heatmap.png)
+![Correlation Heatmap](correlation_heatmap.png)
 
 The correlation heatmap shows relationships between numerical variables.
 
@@ -231,11 +220,11 @@ Decision Trees do not require strong linear relationships between variables and 
 
 ## Financial Obligation Analysis
 
-During EDA, financial obligation variables showed a clear relationship with subscription behaviour.
+The EDA showed that financial obligation variables had a noticeable relationship with subscription behaviour.
 
 ### Subscription Rate by Housing Loan
 
-![Subscription by Housing Loan](images/financial_housing_subscription.png)
+![Subscription by Housing Loan](financial_housing_subscription.png)
 
 | Housing loan | Did not subscribe | Subscribed |
 |---|---:|---:|
@@ -248,7 +237,7 @@ Customers without a housing loan had a much higher subscription rate than custom
 
 ### Subscription Rate by Personal Loan
 
-![Subscription by Personal Loan](images/financial_loan_subscription.png)
+![Subscription by Personal Loan](financial_loan_subscription.png)
 
 | Personal loan | Did not subscribe | Subscribed |
 |---|---:|---:|
@@ -261,7 +250,7 @@ Customers without a personal loan were more likely to subscribe than customers w
 
 ### Subscription Rate by Credit Default
 
-![Subscription by Credit Default](images/financial_default_subscription.png)
+![Subscription by Credit Default](financial_default_subscription.png)
 
 | Credit default | Did not subscribe | Subscribed |
 |---|---:|---:|
@@ -293,7 +282,7 @@ Decision Trees do not require feature scaling because they split data using thre
 
 ## Model Development
 
-Three main Decision Tree modelling stages were used:
+Four Decision Tree modelling stages were used.
 
 ### 1. Baseline Gini Decision Tree
 
@@ -321,7 +310,7 @@ This reduced overfitting and improved ROC-AUC.
 
 ### 4. Final Pruned Decision Tree Experiment
 
-A pruning experiment was also performed using `ccp_alpha`.
+A pruning experiment was performed using `ccp_alpha`.
 
 The pruned model achieved higher accuracy, but its ROC-AUC dropped. It also performed worse at identifying actual subscribers. Because of this, the tuned Decision Tree was selected as the final model.
 
@@ -340,7 +329,7 @@ The pruned model achieved higher accuracy, but its ROC-AUC dropped. It also perf
 
 The baseline Gini and Entropy models both achieved training accuracy of 1.00. This means they memorised the training data and overfitted.
 
-The tuned Decision Tree achieved a better balance between training and testing performance. Its ROC-AUC improved to 0.7558, which shows better separation between subscribers and non-subscribers.
+The tuned Decision Tree achieved a better balance between training and testing performance. Its ROC-AUC improved to 0.7558, showing better separation between subscribers and non-subscribers.
 
 The final pruned tree had the highest test accuracy, but its ROC-AUC dropped to 0.5873. This means the model became too conservative and was weaker at identifying actual subscribers.
 
@@ -368,31 +357,11 @@ The tuned model was selected because it identified more actual subscribers than 
 
 ## Confusion Matrix
 
-![Confusion Matrix](images/confusion_matrix.png)
+![Confusion Matrix](confusion_matrix_tuned_decision_tree.png)
 
 The confusion matrix shows how many customers were correctly and incorrectly classified by the tuned Decision Tree.
 
 For this marketing problem, class 1 recall is important because the business goal is to identify customers who are likely to subscribe. Missing too many actual subscribers would reduce the usefulness of the model.
-
----
-
-## Feature Importance
-
-![Feature Importance](images/feature_importance.png)
-
-Feature importance shows which variables contributed most to the Decision Tree splits.
-
-These features can help explain which customer or campaign attributes were most useful for prediction.
-
----
-
-## Decision Tree Visualisation
-
-![Decision Tree Visualisation](images/decision_tree_visual.png)
-
-The Decision Tree visualisation shows the first few levels of the final tree.
-
-This is one advantage of Decision Trees: they are more interpretable than many black-box machine learning models. The model can be explained as a sequence of rules.
 
 ---
 
@@ -413,29 +382,18 @@ This is one advantage of Decision Trees: they are more interpretable than many b
 ```text
 bank-marketing-decision-tree/
 │
-├── data/
-│   ├── bank-full.csv
-│   └── README.md
-│
-├── images/
-│   ├── target_distribution.png
-│   ├── age_distribution.png
-│   ├── subscription_by_job.png
-│   ├── subscription_by_marital_status.png
-│   ├── correlation_heatmap.png
-│   ├── financial_housing_subscription.png
-│   ├── financial_loan_subscription.png
-│   ├── financial_default_subscription.png
-│   ├── confusion_matrix.png
-│   ├── feature_importance.png
-│   └── decision_tree_visual.png
-│
-├── notebooks/
-│   └── Bank_marketing_DT.ipynb
-│
+├── .gitignore
+├── Bank_marketing_DT.ipynb
 ├── README.md
-├── requirements.txt
-└── .gitignore
+├── bank-full.csv
+├── target_distribution.png
+├── subscription_by_job.png
+├── subscription_by_marital_status.png
+├── correlation_heatmap.png
+├── financial_housing_subscription.png
+├── financial_loan_subscription.png
+├── financial_default_subscription.png
+└── confusion_matrix_tuned_decision_tree.png
 ```
 
 ---
@@ -452,13 +410,13 @@ cd bank-marketing-decision-tree
 ### 2. Install required packages
 
 ```bash
-pip install -r requirements.txt
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
 ```
 
 ### 3. Open the notebook
 
 ```bash
-jupyter notebook notebooks/Bank_marketing_DT.ipynb
+jupyter notebook Bank_marketing_DT.ipynb
 ```
 
 Then run the notebook cells from top to bottom.
